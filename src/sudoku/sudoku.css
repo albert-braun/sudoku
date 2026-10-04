@@ -1,0 +1,420 @@
+.sudo {
+  --ink: #1c1916;
+  --paper: #f6f1e7;
+  --paper-2: #efe6d6;
+  --entered: #1e4b86;
+  --conflict: #9d3044;
+  --brass: #b8884a;
+  --muted: #8c8376;
+  --line: rgba(28, 25, 22, 0.14);
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(900px 420px at 10% -10%, rgba(184, 136, 74, 0.16), transparent 55%),
+    #14120f;
+  color: #f3ece1;
+  font-family: Outfit, ui-sans-serif, sans-serif;
+}
+
+.sudo-top,
+.sudo-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 22px;
+}
+
+.sudo-top {
+  border-bottom: 1px solid rgba(243, 236, 225, 0.08);
+}
+
+.sudo-status {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  flex-wrap: wrap;
+}
+
+.sudo-status strong {
+  color: #e7d3b0;
+  font-weight: 560;
+}
+
+.sudo-brand {
+  min-width: 160px;
+}
+
+.sudo-mark {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 22px;
+  letter-spacing: 0.14em;
+  color: inherit;
+  text-decoration: none;
+}
+
+.sudo-brand p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sudo-switch {
+  display: flex;
+  padding: 3px;
+  border: 1px solid rgba(231, 211, 176, 0.35);
+  border-radius: 999px;
+}
+
+.sudo-switch button,
+.sudo-btn,
+.sudo-key {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.sudo-switch button {
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sudo-switch button.is-on {
+  background: rgba(231, 211, 176, 0.16);
+  color: #f6f1e7;
+}
+
+.sudo-top-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.sudo-btn {
+  border: 1px solid rgba(231, 211, 176, 0.35);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.sudo-btn.primary {
+  background: #e7d3b0;
+  border-color: transparent;
+  color: #1c140c;
+  font-weight: 600;
+}
+
+.sudo-btn:hover,
+.sudo-switch button:hover,
+.sudo-key:hover {
+  background: rgba(231, 211, 176, 0.14);
+}
+
+.sudo-btn.primary:hover {
+  background: #f0e0c4;
+}
+
+.sudo-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.sudo-btn:focus-visible,
+.sudo-switch button:focus-visible,
+.sudo-cell:focus-visible,
+.sudo-key:focus-visible,
+.sudo-mark:focus-visible {
+  outline: 2px solid #e7d3b0;
+  outline-offset: 2px;
+}
+
+.sudo-shell {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.sudo-stage {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 18px;
+  padding: 18px;
+}
+
+.sudo-board {
+  width: min(68vh, 620px);
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  aspect-ratio: 1;
+  background: var(--ink);
+  border: 3px solid var(--ink);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+}
+
+.sudo-cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ddd4c6;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(18px, 3.4vh, 34px);
+  font-weight: 560;
+  line-height: 1;
+}
+
+.sudo-cell.is-given {
+  background: #efe8db;
+}
+
+.sudo-cell.is-entry {
+  color: var(--entered);
+}
+
+.sudo-cell.is-peer {
+  background: #e7f0e4;
+}
+
+.sudo-cell.is-selected {
+  background: #f4ddb0;
+  box-shadow: inset 0 0 0 2px #b8884a;
+  z-index: 1;
+}
+
+.sudo-cell.is-same {
+  background: #e4eef8;
+}
+
+.sudo-cell.is-conflict,
+.sudo-cell.is-conflict.is-entry,
+.sudo-cell.is-conflict.is-given {
+  background: #f8d7dc;
+  color: var(--conflict);
+}
+
+.sudo-cell.is-edge-right {
+  border-right: 3px solid var(--ink);
+}
+
+.sudo-cell.is-edge-bottom {
+  border-bottom: 3px solid var(--ink);
+}
+
+.sudo-cands {
+  font-family: Outfit, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #6d6458;
+}
+
+.sudo-pad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: min(68vh, 620px);
+}
+
+.sudo-key {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(243, 236, 225, 0.16);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  font-family: Fraunces, Georgia, serif;
+  font-size: 20px;
+}
+
+.sudo-key.is-full {
+  opacity: 0.35;
+}
+
+.sudo-key.wide {
+  width: auto;
+  padding: 0 16px;
+  font-family: Outfit, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.sudo-panel {
+  overflow: auto;
+  border-left: 1px solid rgba(243, 236, 225, 0.08);
+  background: rgba(8, 7, 6, 0.35);
+  padding: 20px 20px 28px;
+}
+
+.sudo-kicker {
+  margin: 0 0 6px;
+  color: #e7d3b0;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.sudo-panel h2 {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 28px;
+  font-weight: 560;
+}
+
+.sudo-panel h2.is-open {
+  color: #b7d7b0;
+}
+
+.sudo-panel h2.is-conflict {
+  color: #f0b3bc;
+}
+
+.sudo-meta,
+.sudo-note,
+.sudo-keys {
+  color: #cbbfae;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.sudo-meta {
+  margin: 8px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.sudo-digits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.sudo-digits button {
+  min-height: 54px;
+  border: 1px solid rgba(243, 236, 225, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  padding: 8px;
+}
+
+.sudo-digits button strong {
+  display: block;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 18px;
+}
+
+.sudo-digits button span {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.sudo-digits button.is-open strong {
+  color: #b7d7b0;
+}
+
+.sudo-digits button.is-blocked strong {
+  color: #f0b3bc;
+}
+
+.sudo-digits button.is-focus {
+  border-color: #e7d3b0;
+}
+
+.sudo-note {
+  margin: 14px 0 0;
+}
+
+.sudo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.sudo-proof {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(243, 236, 225, 0.08);
+}
+
+.sudo-live {
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  font-size: 14px;
+}
+
+.sudo-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sudo-banner p {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 20px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 980px) {
+  .sudo {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .sudo-shell {
+    display: block;
+  }
+
+  .sudo-board,
+  .sudo-pad {
+    width: min(92vw, 520px);
+  }
+
+  .sudo-panel {
+    border-left: 0;
+    border-top: 1px solid rgba(243, 236, 225, 0.08);
+  }
+
+  .sudo-top {
+    flex-wrap: wrap;
+  }
+
+  .sudo-top-actions {
+    margin-left: 0;
+  }
+}
